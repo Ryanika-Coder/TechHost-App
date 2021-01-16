@@ -7,4 +7,4 @@ This app can only run on android 4.4 to 9.0 (I'm not sure if Android 10 can too)
 ## Known bugs
 Just like Vanellope von Schweetz, this app also has some bugs such as:
 - Sometimes the panel load really really long.
-~~- Discord Widget that doesn't too work especially when using it on the login page.~~
+- ~~Discord Widget that doesn't too work especially when using it on the login page.~~
