@@ -97,25 +97,25 @@ public class AboutActivity extends  AppCompatActivity  {
 		listview2.setDividerHeight(1);
 		{
 			HashMap<String, Object> _item = new HashMap<>();
-			_item.put("list", "Created by Ryanika");
+			_item.put("list", "Created by :\nRyanika");
 			list.add(_item);
 		}
 		
 		{
 			HashMap<String, Object> _item = new HashMap<>();
-			_item.put("list", "App icon by Techout");
+			_item.put("list", "App icon by :\nTechout");
 			list.add(_item);
 		}
 		
 		{
 			HashMap<String, Object> _item = new HashMap<>();
-			_item.put("list", "No Internet icon by Jardson Almeida");
+			_item.put("list", "No Internet icon by :\nJardson Almeida");
 			list.add(_item);
 		}
 		
 		{
 			HashMap<String, Object> _item = new HashMap<>();
-			_item.put("list", "Made for TechHost");
+			_item.put("list", "Made for :\nTechHost");
 			list.add(_item);
 		}
 		

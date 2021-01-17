@@ -30,11 +30,11 @@ import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
+import android.content.Intent;
+import android.net.Uri;
 import java.util.Timer;
 import java.util.TimerTask;
-import android.content.Intent;
 import android.content.ClipData;
-import android.net.Uri;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.webkit.WebViewClient;
@@ -47,7 +47,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 
 
-public class MainpremiumActivity extends  AppCompatActivity  { 
+public class MainbasicActivity extends  AppCompatActivity  { 
 	
 	public final int REQ_CD_FP = 101;
 	private Timer _timer = new Timer();
@@ -63,14 +63,14 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 	private WebView webview1;
 	private WebView webview2;
 	
+	private Intent intent = new Intent();
 	private TimerTask timer;
 	private Intent fp = new Intent(Intent.ACTION_GET_CONTENT);
-	private Intent intent = new Intent();
 	private AlertDialog.Builder dialog;
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
 		super.onCreate(_savedInstanceState);
-		setContentView(R.layout.mainpremium);
+		setContentView(R.layout.mainbasic);
 		initialize(_savedInstanceState);
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
 			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
@@ -155,7 +155,6 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 	}
 	
 	private void initializeLogic() {
-		setTitle("TechHost App (Premium)");
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().setNavigationBarColor(Color.parseColor("#008dcd"));
 		}
@@ -191,7 +190,7 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 				i.setType("image/*"); startActivityForResult(Intent.createChooser(i, "File Chooser"), FILECHOOSER_RESULTCODE);
 			}
 		});
-		webview1.loadUrl("https://premium.techhost.cc");
+		webview1.loadUrl("https://panel.techhost.cc");
 		webview2.loadUrl("https://support.techhost.cc");
 		webview2.setVisibility(View.GONE);
 		imageview1.setVisibility(View.GONE);
@@ -287,7 +286,7 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(0, 0, 0,"Refresh").setIcon(R.drawable.refresh).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		
-		menu.add(0, 1, 1, "Switch To Basic").setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+		menu.add(0, 1, 1, "Switch To Premium").setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		
 		menu.add(0, 2, 2, "Delete Cache").setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		
@@ -305,7 +304,7 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 			webview2.loadUrl("https://support.techhost.cc");
 			break;
 			case 1 :
-			intent.setClass(getApplicationContext(), MainbasicActivity.class);
+			intent.setClass(getApplicationContext(), MainpremiumActivity.class);
 			startActivity(intent);
 			break;
 			case 2 :
