@@ -26,12 +26,6 @@ import org.json.*;
 import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.animation.ObjectAnimator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.BounceInterpolator;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.DialogFragment;
@@ -44,8 +38,6 @@ public class MainActivity extends  AppCompatActivity  {
 	private ImageView imageview1;
 	private LinearLayout linear2;
 	private ProgressBar progressbar1;
-	
-	private ObjectAnimator animator = new ObjectAnimator();
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
 		super.onCreate(_savedInstanceState);
@@ -66,13 +58,14 @@ public class MainActivity extends  AppCompatActivity  {
 		Handler handler;
 		handler = new Handler();
 		handler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				Intent intent = new Intent(MainActivity.this,MainbasicActivity.class);
-				startActivity(intent);
-				finish();
-			}
+				@Override
+				public void run() {
+						Intent intent = new Intent(MainActivity.this,MainbasicActivity.class);
+						startActivity(intent);
+						finish();
+				}
 		}, 3000);
+		
 	}
 	
 	@Override
@@ -146,4 +139,4 @@ public class MainActivity extends  AppCompatActivity  {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
 	
-}
+}

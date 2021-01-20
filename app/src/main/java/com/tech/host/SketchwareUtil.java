@@ -11,7 +11,7 @@ import java.io.*;
 import android.graphics.drawable.*;
 import android.view.inputmethod.*;
 
-public class ApplicationUtil {
+public class SketchwareUtil {
 		public static int TOP = 1;
 		public static int CENTER = 2;
 		public static int BOTTOM = 3;

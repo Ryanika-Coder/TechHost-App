@@ -50,11 +50,11 @@ public class AboutActivity extends  AppCompatActivity  {
 	
 	private LinearLayout linear1;
 	private LinearLayout linear8;
-	private LinearLayout linear9;
 	private LinearLayout linear10;
 	private CircleImageView circleimageview1;
 	private TextView textview3;
 	private TextView textview4;
+	private LinearLayout linear11;
 	private ListView listview2;
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
@@ -80,11 +80,11 @@ public class AboutActivity extends  AppCompatActivity  {
 		});
 		linear1 = (LinearLayout) findViewById(R.id.linear1);
 		linear8 = (LinearLayout) findViewById(R.id.linear8);
-		linear9 = (LinearLayout) findViewById(R.id.linear9);
 		linear10 = (LinearLayout) findViewById(R.id.linear10);
 		circleimageview1 = (CircleImageView) findViewById(R.id.circleimageview1);
 		textview3 = (TextView) findViewById(R.id.textview3);
 		textview4 = (TextView) findViewById(R.id.textview4);
+		linear11 = (LinearLayout) findViewById(R.id.linear11);
 		listview2 = (ListView) findViewById(R.id.listview2);
 	}
 	
@@ -239,4 +239,4 @@ public class AboutActivity extends  AppCompatActivity  {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
 	
-}
+}

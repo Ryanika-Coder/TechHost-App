@@ -67,13 +67,15 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 	private Intent fp = new Intent(Intent.ACTION_GET_CONTENT);
 	private Intent intent = new Intent();
 	private AlertDialog.Builder dialog;
+	private AlertDialog.Builder dialog2;
 	@Override
 	protected void onCreate(Bundle _savedInstanceState) {
 		super.onCreate(_savedInstanceState);
 		setContentView(R.layout.mainpremium);
 		initialize(_savedInstanceState);
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+		|| ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+			ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
 		}
 		else {
 			initializeLogic();
@@ -112,6 +114,7 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 		fp.setType("*/*");
 		fp.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 		dialog = new AlertDialog.Builder(this);
+		dialog2 = new AlertDialog.Builder(this);
 		
 		webview1.setWebViewClient(new WebViewClient() {
 			@Override
@@ -119,7 +122,7 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 				final String _url = _param2;
 				isNetworkConnectionAvailable();
 				if (!availableNetwork) {
-					ApplicationUtil.showMessage(getApplicationContext(), "You are not connected to the internet");
+					_customToast("You are not connected to the internet", "#f44336");
 					webview1.setVisibility(View.GONE);
 					imageview1.setVisibility(View.VISIBLE);
 				}
@@ -196,6 +199,37 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 		webview2.setVisibility(View.GONE);
 		imageview1.setVisibility(View.GONE);
 		webview1.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+		
+		webview1.setDownloadListener(new DownloadListener() {
+				public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+						ProgressDialog downloading = ProgressDialog.show(MainpremiumActivity.this, "Please wait", "Downloading " + URLUtil.guessFileName(url, contentDisposition, mimetype) + "...", true);
+						DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+						String cookies = CookieManager.getInstance().getCookie(url);
+						request.addRequestHeader("cookie", cookies);
+						request.addRequestHeader("User-Agent", userAgent);
+						request.setDescription("Please wait...");
+						request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
+						request.allowScanningByMediaScanner(); request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+						java.io.File aatv = new java.io.File(Environment.getExternalStorageDirectory().getPath() + "/TechHost App");
+						if(!aatv.exists()){
+								if (!aatv.mkdirs()){
+										_customToast("Failed to download the file", "#f44336");
+										return;
+								}
+						}
+						request.setDestinationInExternalPublicDir("/TechHost App", URLUtil.guessFileName(url, contentDisposition, mimetype));
+						DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+						manager.enqueue(request);
+						downloading.show();
+						//Notif if success
+						BroadcastReceiver onComplete = new BroadcastReceiver() {
+								public void onReceive(Context ctxt, Intent intent) {
+										downloading.dismiss();
+										unregisterReceiver(this);
+								}};
+						registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+				}
+		});
 	}
 	
 	@Override
@@ -254,7 +288,7 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 				finishAffinity();
 			}
 			else {
-				ApplicationUtil.showMessage(getApplicationContext(), "Press back again to exit");
+				_customToast("Press back again to exit", "#03a9f4");
 				timer = new TimerTask() {
 					@Override
 					public void run() {
@@ -287,7 +321,7 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(0, 0, 0,"Refresh").setIcon(R.drawable.refresh).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		
-		menu.add(0, 1, 1, "Switch To Basic").setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+		menu.add(0, 1, 1, "Switch To Basic").setIcon(R.drawable.change).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		
 		menu.add(0, 2, 2, "Delete Cache").setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		
@@ -305,15 +339,28 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 			webview2.loadUrl("https://support.techhost.cc");
 			break;
 			case 1 :
-			intent.setClass(getApplicationContext(), MainbasicActivity.class);
-			startActivity(intent);
+			dialog2.setMessage("Are you sure you want to switch to the basic panel ?");
+			dialog2.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface _dialog, int _which) {
+					intent.setClass(getApplicationContext(), MainbasicActivity.class);
+					startActivity(intent);
+				}
+			});
+			dialog2.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface _dialog, int _which) {
+					
+				}
+			});
+			dialog2.create().show();
 			break;
 			case 2 :
 			webview1.clearCache(true);
 			webview2.clearCache(true);
 			webview1.clearHistory();
 			webview2.clearHistory();
-			ApplicationUtil.showMessage(getApplicationContext(), "Cache deleted");
+			_customToast("Cache deleted", "#43a047");
 			break;
 			case 3 :
 			intent.setClass(getApplicationContext(), AboutActivity.class);
@@ -341,6 +388,26 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 		} else {
 			return availableNetwork = false;
 		}
+	}
+	
+	
+	public void _customToast (final String _text, final String _color) {
+		LayoutInflater inflater = getLayoutInflater();
+		View toastLayout = inflater.inflate(R.layout.toast, null);
+		TextView textview1 = (TextView) toastLayout.findViewById(R.id.textview1);
+		LinearLayout linear1 = (LinearLayout) toastLayout.findViewById(R.id.linear1);
+		
+		android.graphics.drawable.GradientDrawable gd = new android.graphics.drawable.GradientDrawable();
+		gd.setColor(Color.parseColor(_color));
+		gd.setCornerRadius(60);
+		gd.setStroke(2, Color.parseColor("#ffffff"));
+		linear1.setBackground(gd);
+		
+		textview1.setText(_text);
+		Toast toast = new Toast(getApplicationContext());
+		toast.setDuration(Toast.LENGTH_SHORT);
+		toast.setView(toastLayout);
+		toast.show();
 	}
 	
 	
@@ -395,4 +462,4 @@ public class MainpremiumActivity extends  AppCompatActivity  {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
 	
-}
+}
