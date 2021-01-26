@@ -1,45 +1,61 @@
-
+<?xml version='1.0' encoding='utf-8'?>
 <manifest
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.tech.host">
-	<uses-permission	android:name="android.permission.INTERNET"/>
-	<uses-permission	android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission	android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-	<uses-permission	android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<application
-		android:allowBackup="true"
-		android:label="TechHost App"
-		android:icon="@drawable/app_icon"
-		android:largeHeap="true"
-		android:usesCleartextTraffic="true"
-		android:theme="@style/AppTheme">
-		<activity
-			android:name=".MainActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-			android:hardwareAccelerated="true"
-			android:supportsPictureInPicture="true">
-			<intent-filter>
-				<action	android:name="android.intent.action.MAIN"/>
-				<category	android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".AboutActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-			android:hardwareAccelerated="true"
-			android:supportsPictureInPicture="true"/>
-		<activity
-			android:name=".MainpremiumActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-			android:hardwareAccelerated="true"
-			android:supportsPictureInPicture="true"/>
-		<activity
-			android:name=".MainbasicActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-			android:hardwareAccelerated="true"
-			android:supportsPictureInPicture="true"/>
-		<uses-library
-			android:name="org.apache.http.legacy"
-			android:required="false"/>
-	</application>
-</manifest>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tech.host">
+
+    <!-- akses jaringan penuh -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- baca konten kartu SD Anda -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- ubah atau hapus konten kartu SD Anda -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <!-- lihat sambungan jaringan -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:roundIcon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:resizeableActivity="false">
+
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+            android:supportsPictureInPicture="true"
+            android:hardwareAccelerated="true">
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+            android:hardwareAccelerated="true"
+            android:supportsPictureInPicture="true"/>
+
+        <activity
+            android:name=".AboutActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+            android:hardwareAccelerated="true"
+            android:supportsPictureInPicture="true"/>
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="4.0"/>
+
+    </application>
+
+</manifest>

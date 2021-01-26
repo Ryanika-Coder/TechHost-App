@@ -1,3 +1,17 @@
 <resources>
-	<string	name="app_name"	translatable="false">TechHost App</string>
+    <string name="app_name">TechHost App</string>
+	<string name="list1">Created by :\nRyanika</string>
+	<string name="list2">App icon by :\nTechout</string>
+	<string name="list3">No Internet icon by :\nJardson Almeida</string>
+	<string name="list4">Made for :\nTechHost</string>
+	<string name="list5">Tester :\n- Techout\n- JohnlsJoker</string>
+	<string name="list6">Library used :\n- CircleImageView\n- AdvancedWebView</string>
+    <string name="pp_title">PRIVACY POLICY</string>
+	<string name="pp_msg">● The app doesn\'t collect any user personal data as, for example, name, picture or location.\n\n● Consequently, the app doesn\'t share any personal information with any other entity or third parties.\n\n● We allow third-party companies to serve ads and collect certain anonymous information when you visit our app. These companies may use anonymous information such as your Google Advertising ID, your device type and version, browsing activity, location and other technical data relating to your device, in order to provide advertisements.</string>
+	<string name="pp_close">CLOSE</string>
+	<string name="refresh">Refresh</string>
+	<string name="delete_cache">Delete Cache</string>
+	<string name="about">About</string>
+	<string name="pp">Privacy Policy</string>
+	<string name="cfu">Check for Update</string>
 </resources>
